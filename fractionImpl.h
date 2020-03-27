@@ -37,5 +37,6 @@ Fraction<T> Fraction<T>::simplifier(Fraction<T>& fraction) {
 }
 
 
+
 #endif /* FRACTIONIMPL_H */
 
