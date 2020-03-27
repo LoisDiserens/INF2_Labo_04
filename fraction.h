@@ -16,11 +16,13 @@
 #ifndef FRACTION_H
 #define FRACTION_H
 
+
 template <typename T>
 class Fraction
 {
    public:
       Fraction<T> simplifier(Fraction<T>& fraction);
+      Fraction<T>(T initNumerateur, T initDenominateur);
       
    private:
       T pgdc(T a, T b);
