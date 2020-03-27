@@ -20,9 +20,10 @@ template <typename T>
 class Fraction
 {
    public:
-      
+      Fraction<T> simplifier(Fraction<T>& fraction);
       
    private:
+      T pgdc(T a, T b);
       T numerateur;
       T denominateur;
 };

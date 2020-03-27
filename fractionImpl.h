@@ -16,6 +16,25 @@
 #ifndef FRACTIONIMPL_H
 #define FRACTIONIMPL_H
 
+#include <cmath>
+
+#include "fraction.h"
+
+template<typename T>
+T Fraction<T>::pgdc(T a, T b){
+   T tmp;
+   while (b != 0) {
+     tmp = b;
+     b = a % b;
+     a = tmp;
+   }
+   return abs(a); //Valeur absolue pour pas faire changer de signe le numérateur
+}
+
+Fraction<T> Fraction<T>::simplifier(Fraction<T>& fraction) {
+   T pgdc = pgdc(fraction.numerateur, fraction.denominateur);
+   return Fraction(fraction.numerateur / pgdc, fraction.denominateur / pgdc);
+}
 
 
 #endif /* FRACTIONIMPL_H */
