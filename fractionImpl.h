@@ -1,31 +1,22 @@
 /*
  -----------------------------------------------------------------------------------
  Laboratoire : 04
- Fichier     : fraction.h
+ Fichier     : fractionImpl.h
  Auteur(s)   : Nicolas Ogi
                Loïs Diserens
  Date        : 27.03.2020
 
- But         : <à compléter>
+ But         : A le rôle de fraction.cpp, mais délocaliser à cause de la généricité
 
- Remarque(s) : <à compléter>
+ Remarque(s) : -
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
-#ifndef FRACTION_H
-#define FRACTION_H
+#ifndef FRACTIONIMPL_H
+#define FRACTIONIMPL_H
 
-template <typename T>
-class Fraction
-{
-   public:
-      
-      
-   private:
-      T numerateur;
-      T denominateur;
-};
 
-#endif /* FRACTION_H */
+
+#endif /* FRACTIONIMPL_H */
 
