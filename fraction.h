@@ -27,9 +27,9 @@ class Fraction
       operator float() const { return (float)numerateur / (float)denominateur;}
       
    private:
-      T pgdc(T a, T b);
       T numerateur;
       T denominateur;
+      T pgdc(T a, T b);
 };
 
 #endif /* FRACTION_H */
