@@ -40,18 +40,24 @@ Fraction::Fraction(T initNumerateur, T initDenominateur)
 }
 
 template<typename T>
-T Fraction<T>::pgdc(T a, T b){
+T Fraction<T>::pgdc(T a, T b)
+{
    T tmp;
-   while (b != 0) {
+   
+   while (b != 0) 
+   {
      tmp = b;
      b = a % b;
      a = tmp;
    }
+   
    return abs(a); //Valeur absolue pour pas faire changer de signe le numérateur
 }
 
-Fraction<T> Fraction<T>::simplifier(Fraction<T>& fraction) {
+Fraction<T> Fraction<T>::simplifier(Fraction<T>& fraction) 
+{
    T pgdc = pgdc(fraction.numerateur, fraction.denominateur);
+   
    return Fraction(fraction.numerateur / pgdc, fraction.denominateur / pgdc);
 }
 

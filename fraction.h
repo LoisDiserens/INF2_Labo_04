@@ -21,10 +21,10 @@ template <typename T>
 class Fraction
 {
    public:
+      Fraction<T>(T initNumerateur, T initDenominateur);
       Fraction<T> simplifier(Fraction<T>& fraction);
       operator double() const { return (double)numerateur / (double)denominateur};
       operator float() const { return (float)numerateur / (float)denominateur};
-      Fraction<T>(T initNumerateur, T initDenominateur);
       
    private:
       T pgdc(T a, T b);
