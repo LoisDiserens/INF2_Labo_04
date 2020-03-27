@@ -1,8 +1,9 @@
 /*
  -----------------------------------------------------------------------------------
- Laboratoire : <nn>
- Fichier     : <nom du fichier>.cpp
- Auteur(s)   : <prénom> <nom>
+ Laboratoire : 04
+ Fichier     : main.cpp
+ Auteur(s)   : Nicolas Ogi
+               Loïs Diserens
  Date        : <jj.mm.aaaa>
 
  But         : <à compléter>
