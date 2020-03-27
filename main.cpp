@@ -15,6 +15,7 @@
  */
 
 #include <cstdlib>
+#include "fraction.h"
 
 using namespace std;
 
