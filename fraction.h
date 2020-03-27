@@ -21,8 +21,8 @@ class Fraction
 {
    public:
       Fraction<T> simplifier(Fraction<T>& fraction);
-      operator double() const { return (double)numerateur / (double)denominateur};
-      operator float() const { return (float)numerateur / (float)denominateur};
+      operator double() const { return (double)numerateur / (double)denominateur;}
+      operator float() const { return (float)numerateur / (float)denominateur;}
       
    private:
       T pgdc(T a, T b);
