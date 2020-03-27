@@ -1,7 +1,7 @@
 /*
  -----------------------------------------------------------------------------------
  Laboratoire : 04
- Fichier     : main.cpp
+ Fichier     : fraction.h
  Auteur(s)   : Nicolas Ogi
                Loïs Diserens
  Date        : 27.03.2020
@@ -13,16 +13,18 @@
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
  */
+#ifndef FRACTION_H
+#define FRACTION_H
 
-#include <cstdlib>
-
-using namespace std;
-
-
-int main() 
+template <typename T>
+class Fraction
 {
+   public:
    
-   
-   system("PAUSE");
-   return EXIT_SUCCESS;
-}
+   private:
+      T numerateur;
+      T denominateur;
+};
+
+#endif /* FRACTION_H */
+
