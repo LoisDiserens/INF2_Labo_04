@@ -59,7 +59,7 @@ template<typename T>
 bool Fraction<T>::operator==(const Fraction<T>& rhs) const
 {
    
-   return (double)this == (double)rhs;
+   return (double)*this == (double)rhs;
 }
 
 
