@@ -20,28 +20,22 @@
 template <typename T> class Fraction;
 
 // Définition, facon générique, des friends
-template<typename T>
-bool operator==(Fraction<T> lhs, Fraction<T> rhs)
-{
-   lhs.simplifier();
-   rhs.simplifier();
-   
-   return lhs.identite(rhs);
-}
+
 
 
 template <typename T>
 class Fraction
 {
    // Friends
-   friend bool operator==<T>(Fraction<T> lhs, Fraction<T> rhs);
    
    public:
       // Constructeur
       Fraction<T>(T initNumerateur, T initDenominateur);
+      
       // Fonctions membres publiques
       Fraction<T> simplifier();
       bool identite(const Fraction<T>& fractionCible) const;
+      bool operator==(const Fraction<T>& rhs) const;
       operator double() const { return (double)numerateur / (double)denominateur;}
       operator float() const { return (float)numerateur / (float)denominateur;}
       
@@ -49,9 +43,13 @@ class Fraction
       // Variables 
       T numerateur;
       T denominateur;
+      
       // Fonctions membres privées
       T pgdc(T a, T b);
 };
+
+// Inclusion des définitions de fonctions de la classe générique
+#include "fractionImpl.h"
 
 #endif /* FRACTION_H */
 

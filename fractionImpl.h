@@ -18,12 +18,13 @@
 
 #include "fraction.h"
 #include <cmath>
+#include <stdexcept>
 
 using namespace std;
 
 //////////////// FONCTIONS  PUBLIQUES ////////////////
 template <typename T>
-Fraction::Fraction(T initNumerateur, T initDenominateur)
+Fraction<T>::Fraction(T initNumerateur, T initDenominateur)
 {
    // Exceptions
    if(initDenominateur == 0)
@@ -54,6 +55,13 @@ bool Fraction<T>::identite(const Fraction<T>& fractionCible) const
    return numerateur == fractionCible.numerateur && denominateur == fractionCible.denominateur;
 }
 
+template<typename T>
+bool operator==(const Fraction<T>& rhs) const
+{
+   
+   return (double)this == (double)rhs;
+}
+
 
 //////////////// FONCTIONS  PRIVEES ////////////////
 template<typename T>
@@ -70,10 +78,6 @@ T Fraction<T>::pgdc(T a, T b)
    
    return abs(a); //Valeur absolue pour pas faire changer de signe le numérateur
 }
-
-
-//////////////// FONCTIONS  FRIENDS ////////////////
-
 
 #endif /* FRACTIONIMPL_H */
 
