@@ -56,7 +56,7 @@ bool Fraction<T>::identite(const Fraction<T>& fractionCible) const
 }
 
 template<typename T>
-bool operator==(const Fraction<T>& rhs) const
+bool Fraction<T>::operator==(const Fraction<T>& rhs) const
 {
    
    return (double)this == (double)rhs;
