@@ -21,6 +21,7 @@
 
 using namespace std;
 
+//////////////// FONCTIONS  PUBLIQUES ////////////////
 template <typename T>
 Fraction::Fraction(T initNumerateur, T initDenominateur)
 {
@@ -39,6 +40,22 @@ Fraction::Fraction(T initNumerateur, T initDenominateur)
    denominateur = initDenominateur;
 }
 
+template <typename T>
+Fraction<T> Fraction<T>::simplifier() 
+{
+   T pgdc = pgdc(numerateur, denominateur);
+   
+   return Fraction(numerateur / pgdc, denominateur / pgdc);
+}
+
+template <typename T>
+bool Fraction<T>::identite(const Fraction<T>& fractionCible) const
+{
+   return numerateur == fractionCible.numerateur && denominateur == fractionCible.denominateur;
+}
+
+
+//////////////// FONCTIONS  PRIVEES ////////////////
 template<typename T>
 T Fraction<T>::pgdc(T a, T b)
 {
@@ -54,13 +71,8 @@ T Fraction<T>::pgdc(T a, T b)
    return abs(a); //Valeur absolue pour pas faire changer de signe le numérateur
 }
 
-Fraction<T> Fraction<T>::simplifier(Fraction<T>& fraction) 
-{
-   T pgdc = pgdc(fraction.numerateur, fraction.denominateur);
-   
-   return Fraction(fraction.numerateur / pgdc, fraction.denominateur / pgdc);
-}
 
+//////////////// FONCTIONS  FRIENDS ////////////////
 
 
 #endif /* FRACTIONIMPL_H */
