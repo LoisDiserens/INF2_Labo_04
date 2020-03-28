@@ -42,11 +42,11 @@ Fraction<T>::Fraction(T initNumerateur, T initDenominateur)
 }
 
 template <typename T>
-Fraction<T> Fraction<T>::simplifier() 
+Fraction<T> Fraction<T>::simplifier() const
 {
-   T pgdc = pgdc(numerateur, denominateur);
+   T divCommun = pgdc(numerateur, denominateur);
    
-   return Fraction(numerateur / pgdc, denominateur / pgdc);
+   return Fraction(numerateur / divCommun, denominateur / divCommun);
 }
 
 template <typename T>
@@ -58,14 +58,55 @@ bool Fraction<T>::identite(const Fraction<T>& fractionCible) const
 template<typename T>
 bool Fraction<T>::operator==(const Fraction<T>& rhs) const
 {
-   
    return (double)*this == (double)rhs;
+}
+
+//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH
+template<typename T>
+Fraction<T> Fraction<T>::operator +(const Fraction<T>& fraction) const { 
+   
+   //Copie de this et de la fraction passée en paramètre car on ne veut pas modifier
+   //les fractions originales et pour ne pas modifier la surcharge de l'opérateur +
+   // en passant par copie et en enlevant le const à la fin par exemple
+   
+   //Simplifications préalables pour limiter les débordements
+   Fraction<T> fractionSimplifiee1 = this->simplifier();
+   Fraction<T> fractionSimplifiee2 = fraction.simplifier();
+   
+   //Pour trouver le dénominateur commun : den1 * den2 / pgdc(den1, den2)
+   T denomFractionRes = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
+                        pgdc(fractionSimplifiee1.denominateur, fractionSimplifiee2.denominateur);
+   
+   //Pour trouver le numérateur : num1 * (denCommun / den1) + num2 * (denCommun / den2) 
+   T numerFractionRes = fractionSimplifiee1.numerateur * (denomFractionRes / fractionSimplifiee1.denominateur) + 
+                        fractionSimplifiee2.numerateur * (denomFractionRes / fractionSimplifiee2.denominateur);
+   
+   Fraction<T> fractionRes(numerFractionRes, denomFractionRes);
+   
+   //Retourne une version simplifiée
+   return fractionRes.simplifier(); 
+}
+
+//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH
+template<typename T>
+Fraction<T> Fraction<T>::operator *(const Fraction<T>& fraction) const {
+   
+   //Même chose que pour l'opérateur + concernant la copie
+   
+   //Simplifications préalables pour limiter les débordements
+   Fraction<T> fractionSimplifiee1 = this->simplifier();
+   Fraction<T> fractionSimplifiee2 = fraction.simplifier();
+   
+   Fraction<T> fractionRes(fractionSimplifiee1.numerateur * fractionSimplifiee2.numerateur, 
+                           fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur);
+   
+   return fractionRes.simplifier();
 }
 
 
 //////////////// FONCTIONS  PRIVEES ////////////////
 template<typename T>
-T Fraction<T>::pgdc(T a, T b)
+T Fraction<T>::pgdc(T a, T b) const
 {
    T tmp;
    

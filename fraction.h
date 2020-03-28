@@ -21,7 +21,7 @@
 // Déclaration avancée de la classe 
 template <typename T> class Fraction;
 
-// Définition, facon générique, des friends
+// Définition, façon générique, des friends
 template<typename T> 
 std::ostream& operator << (std::ostream& lhs, const Fraction<T>& fraction) { 
    lhs << fraction.numerateur << "/" << fraction.denominateur; 
@@ -33,16 +33,21 @@ template <typename T>
 class Fraction
 {
    // Friends
+   friend std::ostream& operator<< <T>(std::ostream& lhs, const Fraction<T>& fraction); 
    
    public:
       // Constructeur
       Fraction<T>(T initNumerateur, T initDenominateur);
       
       // Fonctions membres publiques
-      Fraction<T> simplifier();
+      Fraction<T> simplifier() const;
       bool identite(const Fraction<T>& fractionCible) const;
+      
+      //Seulement capable de sommer des fractions. Doit être capable de sommer une fraction avec une constante ?
+      Fraction<T> operator+ (const Fraction<T>& fraction) const;
+      //Même question mais pour la multiplication ?
+      Fraction<T> operator* (const Fraction<T>& fraction) const;
       bool operator==(const Fraction<T>& rhs) const;
-      friend std::ostream& operator<< <T>(std::ostream& lhs, const Fraction<T>& fraction); 
       operator double() const { return (double)numerateur / (double)denominateur;}
       operator float() const { return (float)numerateur / (float)denominateur;}
       
@@ -52,7 +57,7 @@ class Fraction
       T denominateur;
       
       // Fonctions membres privées
-      T pgdc(T a, T b);
+      T pgdc(T a, T b) const;
 };
 
 // Inclusion des définitions de fonctions de la classe générique
