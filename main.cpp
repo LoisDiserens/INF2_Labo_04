@@ -55,6 +55,10 @@ int main()
    cout << "\nMultiplication de fractions : " << endl;
    cout << frac3 << " * " << frac4 << " = " << frac3 * frac4 << endl;
    
+   Fraction<int> frac5(numeric_limits<int>::max(),6);
+   Fraction<int> frac6(3,4);
+   cout << "---------------------------------" << endl;
+   cout << frac5 << " + " << frac6 << " = " << frac5 + frac6 << endl;
    
    system("PAUSE");
    return EXIT_SUCCESS;
