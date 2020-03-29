@@ -55,6 +55,16 @@ int main()
    cout << "\nMultiplication de fractions : " << endl;
    cout << frac3 << " * " << frac4 << " = " << frac3 * frac4 << endl;
    
+   
+   cout << "----------------------------------------" << endl;
+   Fraction<int> frac5(1,2);
+   Fraction<int> frac6(3,2);
+   
+   cout << "\nAddition de fractions : " << endl;
+   cout << frac5 << " + " << frac6 << " = " << frac5 + frac6 << endl;
+   frac5 += frac6;
+   cout << frac5 << endl;
+   
    system("PAUSE");
    return EXIT_SUCCESS;
 }

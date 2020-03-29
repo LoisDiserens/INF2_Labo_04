@@ -42,12 +42,13 @@ class Fraction
       // Fonctions membres publiques
       Fraction<T> simplifier() const;
       bool identite(const Fraction<T>& fractionCible) const;
+      bool operator==(const Fraction<T>& rhs) const;
       
       //Seulement capable de sommer des fractions. Doit être capable de sommer une fraction avec une constante ?
-      Fraction<T> operator+ (const Fraction<T>& fraction) const;
+      Fraction<T> operator+(const Fraction<T>& fraction) const;
+      Fraction<T>& operator+=(const Fraction<T>& fractionAdditonner);
       //Même question mais pour la multiplication ?
       Fraction<T> operator* (const Fraction<T>& fraction) const;
-      bool operator==(const Fraction<T>& rhs) const;
       operator double() const { return (double)numerateur / (double)denominateur;}
       operator float() const { return (float)numerateur / (float)denominateur;}
       

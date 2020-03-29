@@ -61,17 +61,44 @@ bool Fraction<T>::operator==(const Fraction<T>& rhs) const
    return (double)*this == (double)rhs;
 }
 
-//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH
+//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH   -------------- SIMPLIFIER LE CODE  COMME PRESENTE SLIDE 70 CHP CLASSE ??
 template<typename T>
-Fraction<T> Fraction<T>::operator +(const Fraction<T>& fraction) const { 
+Fraction<T> Fraction<T>::operator+(const Fraction<T>& fraction) const 
+{  
+//   //Copie de this et de la fraction passée en paramètre car on ne veut pas modifier
+//   //les fractions originales et pour ne pas modifier la surcharge de l'opérateur +
+//   // en passant par copie et en enlevant le const à la fin par exemple
+//   
+//   //Simplifications préalables pour limiter les débordements
+//   Fraction<T> fractionSimplifiee1 = simplifier();
+//   Fraction<T> fractionSimplifiee2 = fraction.simplifier();
+//   
+//   //Pour trouver le dénominateur commun : den1 * den2 / pgdc(den1, den2)
+//   T denomFractionRes = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
+//                        pgdc(fractionSimplifiee1.denominateur, fractionSimplifiee2.denominateur);
+//   
+//   //Pour trouver le numérateur : num1 * (denCommun / den1) + num2 * (denCommun / den2) 
+//   T numerFractionRes = fractionSimplifiee1.numerateur * (denomFractionRes / fractionSimplifiee1.denominateur) + 
+//                        fractionSimplifiee2.numerateur * (denomFractionRes / fractionSimplifiee2.denominateur);
+//   
+//   Fraction<T> fractionRes(numerFractionRes, denomFractionRes);
+//   
+//   //Retourne une version simplifiée
+//   return fractionRes.simplifier(); 
    
-   //Copie de this et de la fraction passée en paramètre car on ne veut pas modifier
-   //les fractions originales et pour ne pas modifier la surcharge de l'opérateur +
-   // en passant par copie et en enlevant le const à la fin par exemple
    
+   Fraction<T> fractionRes = *this;
+   fractionRes += fraction;
+   
+   return fractionRes;
+}
+
+template<typename T>
+Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditonner)
+{ 
    //Simplifications préalables pour limiter les débordements
    Fraction<T> fractionSimplifiee1 = this->simplifier();
-   Fraction<T> fractionSimplifiee2 = fraction.simplifier();
+   Fraction<T> fractionSimplifiee2 = fractionAdditonner.simplifier();
    
    //Pour trouver le dénominateur commun : den1 * den2 / pgdc(den1, den2)
    T denomFractionRes = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
@@ -81,15 +108,20 @@ Fraction<T> Fraction<T>::operator +(const Fraction<T>& fraction) const {
    T numerFractionRes = fractionSimplifiee1.numerateur * (denomFractionRes / fractionSimplifiee1.denominateur) + 
                         fractionSimplifiee2.numerateur * (denomFractionRes / fractionSimplifiee2.denominateur);
    
-   Fraction<T> fractionRes(numerFractionRes, denomFractionRes);
+   // Affectation des résultats, puis simplification via un objet temporaire (contrainte due à la consigne concernant la fonction simplifier())
+   denominateur = denomFractionRes;
+   numerateur = numerFractionRes;
    
-   //Retourne une version simplifiée
-   return fractionRes.simplifier(); 
+   Fraction<T> fractionTemp = this->simplifier();
+   numerateur = fractionTemp.numerateur;
+   denominateur = fractionTemp.denominateur;
+   
+   return *this; 
 }
 
 //A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH
 template<typename T>
-Fraction<T> Fraction<T>::operator *(const Fraction<T>& fraction) const {
+Fraction<T> Fraction<T>::operator*(const Fraction<T>& fraction) const {
    
    //Même chose que pour l'opérateur + concernant la copie
    
