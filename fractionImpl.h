@@ -150,7 +150,16 @@ Fraction<T> Fraction<T>::operator*(const Fraction<T>& fraction) const
 //   return fractionRes.simplifier();
    
    Fraction<T> fractionRes = *this;
-   fractionRes *= fraction;
+   
+   try
+   {
+      fractionRes *= fraction;
+   }
+   catch(const overflow_error& e)
+   {
+      cout << e.what() << endl;
+      throw;
+   }
    
    return fractionRes;
 }
