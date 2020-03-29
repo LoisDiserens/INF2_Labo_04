@@ -48,7 +48,9 @@ class Fraction
       Fraction<T> operator+(const Fraction<T>& fraction) const;
       Fraction<T>& operator+=(const Fraction<T>& fractionAdditonner);
       //Même question mais pour la multiplication ?
-      Fraction<T> operator* (const Fraction<T>& fraction) const;
+      Fraction<T> operator*(const Fraction<T>& fraction) const;
+      Fraction<T>& operator*=(const Fraction<T>& fraction);
+      
       operator double() const { return (double)numerateur / (double)denominateur;}
       operator float() const { return (float)numerateur / (float)denominateur;}
       

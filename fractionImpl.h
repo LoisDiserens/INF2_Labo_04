@@ -101,18 +101,15 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditonner)
    Fraction<T> fractionSimplifiee2 = fractionAdditonner.simplifier();
    
    //Pour trouver le dénominateur commun : den1 * den2 / pgdc(den1, den2)
-   T denomFractionRes = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
-                        pgdc(fractionSimplifiee1.denominateur, fractionSimplifiee2.denominateur);
+   T denomFractionTemp = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
+                         pgdc(fractionSimplifiee1.denominateur, fractionSimplifiee2.denominateur);
    
    //Pour trouver le numérateur : num1 * (denCommun / den1) + num2 * (denCommun / den2) 
-   T numerFractionRes = fractionSimplifiee1.numerateur * (denomFractionRes / fractionSimplifiee1.denominateur) + 
-                        fractionSimplifiee2.numerateur * (denomFractionRes / fractionSimplifiee2.denominateur);
+   T numerFractionTemp = fractionSimplifiee1.numerateur * (denomFractionTemp / fractionSimplifiee1.denominateur) + 
+                         fractionSimplifiee2.numerateur * (denomFractionTemp / fractionSimplifiee2.denominateur);
    
    // Affectation des résultats, puis simplification via un objet temporaire (contrainte due à la consigne concernant la fonction simplifier())
-   denominateur = denomFractionRes;
-   numerateur = numerFractionRes;
-   
-   Fraction<T> fractionTemp = this->simplifier();
+   Fraction<T> fractionTemp = Fraction<T> (numerFractionTemp, denomFractionTemp).simplifier();
    numerateur = fractionTemp.numerateur;
    denominateur = fractionTemp.denominateur;
    
@@ -121,7 +118,29 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditonner)
 
 //A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH
 template<typename T>
-Fraction<T> Fraction<T>::operator*(const Fraction<T>& fraction) const {
+Fraction<T> Fraction<T>::operator*(const Fraction<T>& fraction) const 
+{
+   
+//   //Même chose que pour l'opérateur + concernant la copie
+//   
+//   //Simplifications préalables pour limiter les débordements
+//   Fraction<T> fractionSimplifiee1 = this->simplifier();
+//   Fraction<T> fractionSimplifiee2 = fraction.simplifier();
+//   
+//   Fraction<T> fractionRes(fractionSimplifiee1.numerateur * fractionSimplifiee2.numerateur, 
+//                           fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur);
+//   
+//   return fractionRes.simplifier();
+   
+   Fraction<T> fractionRes = *this;
+   fractionRes *= fraction;
+   
+   return fractionRes;
+}
+
+template<typename T>
+Fraction<T>& Fraction<T>::operator*=(const Fraction<T>& fraction) 
+{
    
    //Même chose que pour l'opérateur + concernant la copie
    
@@ -132,7 +151,12 @@ Fraction<T> Fraction<T>::operator*(const Fraction<T>& fraction) const {
    Fraction<T> fractionRes(fractionSimplifiee1.numerateur * fractionSimplifiee2.numerateur, 
                            fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur);
    
-   return fractionRes.simplifier();
+   fractionRes = fractionRes.simplifier();
+   
+   numerateur = fractionRes.numerateur;
+   denominateur = fractionRes.denominateur;
+   
+   return *this;
 }
 
 
