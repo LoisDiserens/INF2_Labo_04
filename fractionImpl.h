@@ -8,7 +8,8 @@
 
  But         : A le rôle de fraction.cpp, mais délocaliser à cause de la généricité
 
- Remarque(s) : -
+ Remarque(s) : Indiquations sur les méthodes de détection d'overflow, suivant le cours
+               d'INF 1, ainsi que sur : http://www.cplusplus.com/articles/DE18T05o/
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
@@ -18,6 +19,7 @@
 
 #include "fraction.h"
 #include <cmath>
+#include <limits>
 #include <stdexcept>
 
 using namespace std;
@@ -61,7 +63,7 @@ bool Fraction<T>::operator==(const Fraction<T>& rhs) const
    return (double)*this == (double)rhs;
 }
 
-//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH   -------------- SIMPLIFIER LE CODE  COMME PRESENTE SLIDE 70 CHP CLASSE ??
+//A FAIRE : GERER LES DEBORDEMENTS AVEC TRY/CATCH  
 template<typename T>
 Fraction<T> Fraction<T>::operator+(const Fraction<T>& fraction) const 
 {  
@@ -99,6 +101,21 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditonner)
    //Simplifications préalables pour limiter les débordements
    Fraction<T> fractionSimplifiee1 = this->simplifier();
    Fraction<T> fractionSimplifiee2 = fractionAdditonner.simplifier();
+   
+   // Detection d'un débordement, avant le calcul
+   // Cas d'overflow (voir source dans l'en-tête de fichier): a+b-R<a and a+b-R<b
+   if((fractionSimplifiee1.numerateur + fractionSimplifiee2.numerateur - numeric_limits<T>::max() < fractionSimplifiee1.numerateur) 
+      && 
+      (fractionSimplifiee1.numerateur + fractionSimplifiee2.numerateur - numeric_limits<T>::max() < fractionSimplifiee2.numerateur))
+   {
+      throw overflow_error("Debordement du numerateur");
+   }
+   else if ((fractionSimplifiee1.denominateur + fractionSimplifiee2.denominateur - numeric_limits<T>::max() < fractionSimplifiee1.denominateur) 
+            && 
+            (fractionSimplifiee1.denominateur + fractionSimplifiee2.denominateur - numeric_limits<T>::max() < fractionSimplifiee2.denominateur))
+   {
+      throw overflow_error("Debordement du denominateur");
+   }
    
    //Pour trouver le dénominateur commun : den1 * den2 / pgdc(den1, den2)
    T denomFractionTemp = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
@@ -148,6 +165,17 @@ Fraction<T>& Fraction<T>::operator*=(const Fraction<T>& fraction)
    Fraction<T> fractionSimplifiee1 = this->simplifier();
    Fraction<T> fractionSimplifiee2 = fraction.simplifier();
    
+   // Detection d'un débordement, avant le calcul effectif
+   if(fractionSimplifiee1.numerateur > (numeric_limits<T>::max() / fractionSimplifiee2.numerateur))
+   {
+      throw overflow_error("Debordement du numerateur");
+   }
+   else if (fractionSimplifiee1.denominateur > (numeric_limits<T>::max() / fractionSimplifiee2.denominateur))
+   {
+      throw overflow_error("Debordement du denominateur");
+   }
+   
+   // Affectation des résultats, puis simplification via un objet temporaire (contrainte due à la consigne concernant la fonction simplifier())
    Fraction<T> fractionRes(fractionSimplifiee1.numerateur * fractionSimplifiee2.numerateur, 
                            fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur);
    
