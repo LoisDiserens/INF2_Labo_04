@@ -209,14 +209,35 @@ Fraction<T>& Fraction<T>::operator*=(const Fraction<T>& fraction)
    Fraction<T> fractionSimplifiee2 = fraction.simplifier();
    
    // Detection d'un débordement, avant le calcul effectif
+//   if(fractionSimplifiee1.numerateur > (numeric_limits<T>::max() / fractionSimplifiee2.numerateur))
+//   {
+//      throw overflow_error("Debordement du numerateur");
+//   }
+//   else if (fractionSimplifiee1.denominateur > (numeric_limits<T>::max() / fractionSimplifiee2.denominateur))
+//   {
+//      throw overflow_error("Debordement du denominateur");
+//   }
+   
+   // Numerateur
    if(fractionSimplifiee1.numerateur > (numeric_limits<T>::max() / fractionSimplifiee2.numerateur))
    {
-      throw overflow_error("Debordement du numerateur");
+      throw overflow_error("Debordement du numerateur (Overflow)");
    }
-   else if (fractionSimplifiee1.denominateur > (numeric_limits<T>::max() / fractionSimplifiee2.denominateur))
+   else if (fractionSimplifiee1.numerateur < (numeric_limits<T>::lowest() / fractionSimplifiee2.numerateur))
    {
-      throw overflow_error("Debordement du denominateur");
+      throw underflow_error("Debordement du numerateur (Underverflow)");
    }
+   // Denominateur
+   if(fractionSimplifiee1.denominateur > (numeric_limits<T>::max() / fractionSimplifiee2.denominateur))
+   {
+      throw overflow_error("Debordement du denominateur (Overflow)");
+   }
+   else if (fractionSimplifiee1.denominateur < (numeric_limits<T>::lowest() / fractionSimplifiee2.denominateur))
+   {
+      throw underflow_error("Debordement du denominateur (Underverflow)");
+   }
+   
+   
    
    // Affectation des résultats, puis simplification via un objet temporaire (contrainte due à la consigne concernant la fonction simplifier())
    Fraction<T> fractionRes(fractionSimplifiee1.numerateur * fractionSimplifiee2.numerateur, 
