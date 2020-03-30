@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "fraction.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -51,14 +52,39 @@ int main()
    
    cout << "\nAddition de fractions : " << endl;
    cout << frac3 << " + " << frac4 << " = " << frac3 + frac4 << endl;
-   
+   cout << frac3 << " += " << frac4 << " = ";
+   frac3 += frac4;
+   cout << frac3 << endl;
+           
    cout << "\nMultiplication de fractions : " << endl;
    cout << frac3 << " * " << frac4 << " = " << frac3 * frac4 << endl;
+   cout << frac3 << " *= " << frac4 << " = ";
+   frac3 *= frac4;
+   cout << frac3 << endl;
    
-   Fraction<int> frac5(numeric_limits<int>::lowest(),6);
-   Fraction<int> frac6(3,2);
-   cout << "---------------------------------" << endl;
-   cout << frac5 << " * " << frac6 << " = " << frac5 * frac6 << endl;
+//   Fraction<int> frac5(numeric_limits<int>::lowest(),6);
+//   Fraction<int> frac6(3,2);
+//   cout << "---------------------------------" << endl;
+//   cout << frac5 << " * " << frac6 << " = " << frac5 * frac6 << endl;
+   
+   double somme = 0;
+   
+//   try{
+//         int signe = 1;
+//         int j = 1;
+//         
+//         while(true) {
+//            double frac = (double)Fraction<int>(signe * 4, j);
+//            somme += frac;
+//            signe *= -1;
+//            j += 2;
+//         }
+//   } catch (exception& e) {
+//      cout << setprecision(15) << somme << endl;
+//   }
+   
+   
+   
    
    system("PAUSE");
    return EXIT_SUCCESS;
