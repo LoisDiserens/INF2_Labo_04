@@ -16,10 +16,21 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "fraction.h"
 #include <iomanip>
+#include <stdexcept>
+#include "fraction.h"
 
 using namespace std;
+
+// Déclaration des fonctions de test
+template <typename T>
+Fraction<T> creationFraction(T numerateur, T denominateur);
+template <typename T>
+void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2);
+template <typename T>
+void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs);
+template <typename T>
+void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 
 
 int main() 
@@ -27,45 +38,38 @@ int main()
    Fraction<int> frac1(-10,4);
    Fraction<int> frac2(3,4);
    
-   cout << "Affichage des fractions : " << endl;
-   cout << frac1 << " " << frac2 << endl;
+   testBonFonctionnement(frac1,frac2);
+//   cout << "Affichage des fractions : " << endl;
+//   cout << frac1 << " " << frac2 << endl;
+//   
+//   cout << "\nSimplification de fraction : " << endl;
+//   cout << "Avant : " << frac1;
+//   frac1 = frac1.simplifier();
+//   cout << " Apres : " << frac1 << endl;
+//   
+//   cout << "\nEgalite numerique de fractions : " << endl;
+//   cout << frac1 << " et " << frac2 << " egales ?" << endl;
+//   cout << boolalpha << (frac1 == frac2) << endl;
+//   
+//   cout << "\nIdenticite de fractions : " << endl;
+//   cout << frac1 << " et " << frac2 << " identiques ?" << endl;
+//   cout << boolalpha << frac1.identite(frac2) << endl;
+//   
+//   cout << "\nValeur numerique des fractions en double et float :" << endl;
+//   cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
+//   cout << frac2 << " : " << float(frac2) << " (float)" << endl;
    
-   cout << "\nSimplification de fraction : " << endl;
-   cout << "Avant : " << frac1;
-   frac1 = frac1.simplifier();
-   cout << " Apres : " << frac1 << endl;
-   
-   cout << "\nEgalite numerique de fractions : " << endl;
-   cout << frac1 << " et " << frac2 << " egales ?" << endl;
-   cout << boolalpha << (frac1 == frac2) << endl;
-   
-   cout << "\nIdenticite de fractions : " << endl;
-   cout << frac1 << " et " << frac2 << " identiques ?" << endl;
-   cout << boolalpha << frac1.identite(frac2) << endl;
-   
-   cout << "\nValeur numerique des fractions en double et float :" << endl;
-   cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
-   cout << frac2 << " : " << float(frac2) << " (float)" << endl;
+   Fraction<int> fracT = creationFraction(2,-4);
+   cout << fracT<< endl;
    
    Fraction<int> frac3(-5,6);
    Fraction<int> frac4(3,4);
+   additionFraction(frac3, frac4);        
+   multiplicationFraction(frac3, frac4);
    
-   cout << "\nAddition de fractions : " << endl;
-   cout << frac3 << " + " << frac4 << " = " << frac3 + frac4 << endl;
-   cout << frac3 << " += " << frac4 << " = ";
-   frac3 += frac4;
-   cout << frac3 << endl;
-           
-   cout << "\nMultiplication de fractions : " << endl;
-   cout << frac3 << " * " << frac4 << " = " << frac3 * frac4 << endl;
-   cout << frac3 << " *= " << frac4 << " = ";
-   frac3 *= frac4;
-   cout << frac3 << endl;
-   
-//   Fraction<int> frac5(numeric_limits<int>::lowest(),6);
-//   Fraction<int> frac6(3,2);
-//   cout << "---------------------------------" << endl;
-//   cout << frac5 << " * " << frac6 << " = " << frac5 * frac6 << endl;
+   Fraction<int> frac5(2,2);
+   Fraction<int> frac6(3,4);
+   additionFraction(frac5, frac6);
    
    double somme = 0;
    
@@ -89,3 +93,80 @@ int main()
    system("PAUSE");
    return EXIT_SUCCESS;
 }
+
+template <typename T>
+Fraction<T> creationFraction(T numerateur, T denominateur)
+{
+   cout << "\nCreation de fraction : " << endl;
+   try
+   {
+      return Fraction<int>(numerateur,denominateur);
+   }
+   catch(const exception& e)
+   {
+      cout << "Une erreur est survenue: " << e.what() << endl;
+   }
+   
+   // Dans le cas où une erreur à la création survient, retourne une fraction égale à 0
+   return Fraction<int>(0,1);
+}
+
+template <typename T>
+void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
+{
+   cout << "Affichage des fractions : " << endl;
+   cout << frac1 << " " << frac2 << endl;
+   
+   cout << "\nSimplification de fraction : " << endl;
+   cout << "Avant : " << frac1;
+   frac1 = frac1.simplifier();
+   cout << " Apres : " << frac1 << endl;
+   
+   cout << "\nEgalite numerique de fractions : " << endl;
+   cout << frac1 << " et " << frac2 << " egales ?" << endl;
+   cout << boolalpha << (frac1 == frac2) << endl;
+   
+   cout << "\nIdenticite de fractions : " << endl;
+   cout << frac1 << " et " << frac2 << " identiques ?" << endl;
+   cout << boolalpha << frac1.identite(frac2) << endl;
+   
+   cout << "\nValeur numerique des fractions en double et float :" << endl;
+   cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
+   cout << frac2 << " : " << float(frac2) << " (float)" << endl;
+}
+
+template <typename T>
+void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs)
+{
+   cout << "\nAddition de fractions : " << endl;
+   try
+   {
+      cout << lhs << " + " << rhs << " = " << lhs + rhs << endl;
+      cout << lhs << " += " << rhs << " = ";
+      lhs += rhs;
+      cout << lhs << endl;
+   }
+   catch(const exception& e)
+   {
+      cout << "Une erreur est survenue: " << e.what() << endl;
+   }
+}
+
+template <typename T>
+void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
+{
+   cout << "\nMultiplication de fractions : " << endl;
+   try
+   {
+      cout << lhs << " * " << rhs << " = " << lhs * rhs << endl;
+      cout << lhs << " *= " << rhs << " = ";
+      lhs *= rhs;
+      cout << lhs << endl;
+   }
+   catch(const exception& e)
+   {
+      cout << "Une erreur est survenue: " << e.what() << endl;
+   }
+}
+   
+   
