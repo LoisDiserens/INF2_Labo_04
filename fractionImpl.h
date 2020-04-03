@@ -47,7 +47,7 @@ Fraction<T>::Fraction(T initNumerateur, T initDenominateur)
 }
 
 template <typename T>
-Fraction<T> Fraction<T>::simplifier() const
+Fraction<T> Fraction<T>::simplifier() const noexcept
 {
    T divCommun = pgdc(numerateur, denominateur);
    
@@ -55,9 +55,9 @@ Fraction<T> Fraction<T>::simplifier() const
 }
 
 template <typename T>
-bool Fraction<T>::identite(const Fraction<T>& fractionCible) const
+bool Fraction<T>::identite(const Fraction<T>& fractionComparee) const
 {
-   return numerateur == fractionCible.numerateur && denominateur == fractionCible.denominateur;
+   return numerateur == fractionComparee.numerateur && denominateur == fractionComparee.denominateur;
 }
 
 template <typename T>
@@ -88,7 +88,7 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditionnee)
    {
       throw overflow_error("Debordement du denominateur (Overflow)");
    }
-   else if (fractionSimplifiee1.numerateur < (numeric_limits<T>::lowest() / fractionSimplifiee2.denominateur))
+   else if (fractionSimplifiee1.denominateur < (numeric_limits<T>::lowest() / fractionSimplifiee2.denominateur))
    {
       throw underflow_error("Debordement du denominateur (Underflow)");
    }
@@ -97,7 +97,7 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditionnee)
    T denomFractionTemp = fractionSimplifiee1.denominateur * fractionSimplifiee2.denominateur / 
                          pgdc(fractionSimplifiee1.denominateur, fractionSimplifiee2.denominateur);
    
-   // Vérification que les nouveaux numérateur ne vont pas subir d'overflow / underflow
+   // Vérification que les nouveaux numérateurs ne vont pas subir d'overflow / underflow
    if(fractionSimplifiee1.numerateur > (numeric_limits<T>::max() / (denomFractionTemp / fractionSimplifiee1.denominateur)))
    {
       throw overflow_error("Debordement du nouveau numerateur (de la fonction de gauche), apres PGDC (Overflow)");
@@ -106,6 +106,8 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditionnee)
    {
       throw underflow_error("Debordement du nouveau numerateur (de la fonction de gauche), apres PGDC (Underverflow)");
    }
+   
+   
    if(fractionSimplifiee2.numerateur > (numeric_limits<T>::max() / (denomFractionTemp / fractionSimplifiee2.denominateur)))
    {
       throw overflow_error("Debordement du nouveau numerateur (de la fonction de droite), apres PGDC (Overflow)");
@@ -119,7 +121,7 @@ Fraction<T>& Fraction<T>::operator+=(const Fraction<T>& fractionAdditionnee)
    T nouveauNumerateurF1 = fractionSimplifiee1.numerateur * (denomFractionTemp / fractionSimplifiee1.denominateur);
    T nouveauNumerateurF2 = fractionSimplifiee2.numerateur * (denomFractionTemp / fractionSimplifiee2.denominateur);
    
-   // Exceptions, addition des numérateur
+   // Exceptions, addition des numérateurs
    if(nouveauNumerateurF1 > 0 && nouveauNumerateurF2 > numeric_limits<T>::max() - nouveauNumerateurF1)
    {
       throw overflow_error("Debordement du numerateur (overflow)");
@@ -189,7 +191,7 @@ Fraction<T>& Fraction<T>::operator*=(const Fraction<T>& fraction)
 
 //////////////// FONCTIONS  PRIVEES ////////////////
 template <typename T>
-T Fraction<T>::pgdc(T a, T b) const
+T Fraction<T>::pgdc(T a, T b) const noexcept
 {
    T tmp;
    
