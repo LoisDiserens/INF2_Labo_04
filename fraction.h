@@ -56,6 +56,13 @@ class Fraction
       Fraction<T>(T initNumerateur, T initDenominateur);
       
       // Fonctions membres publiques
+      /**
+       * Fonction retournant le dénominateur d'une fraction
+       * @return T le dénominateur de la fraction
+       * 
+       * Cette fonction possède la garantie no-throw.
+       */
+      T donneDenominateur() const noexcept;
       
       /**
        * Fonction retournant la version irreductible de l'objet Fraction qui a 
@@ -119,7 +126,7 @@ class Fraction
       /**
        * Surcharge de l'opérateur de cast float afin de retourner la valeur 
        * numérique de la fraction en float
-       */
+      */
       operator float() const { return (float)numerateur / (float)denominateur;}
       
    private:

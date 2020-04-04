@@ -47,6 +47,12 @@ Fraction<T>::Fraction(T initNumerateur, T initDenominateur)
 }
 
 template <typename T>
+T Fraction<T>::donneDenominateur() const noexcept
+{
+   return denominateur;
+}
+
+template <typename T>
 Fraction<T> Fraction<T>::simplifier() const noexcept
 {
    T divCommun = pgdc(numerateur, denominateur);

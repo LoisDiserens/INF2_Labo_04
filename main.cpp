@@ -28,6 +28,8 @@ Fraction<T> creationFraction(T numerateur, T denominateur);
 template <typename T>
 void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2);
 template <typename T>
+void sommeDebordement(T numerateur, T denominateur);
+template <typename T>
 void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 template <typename T>
 void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
@@ -35,59 +37,31 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 
 int main() 
 {
-   Fraction<int> frac1(-10,4);
-   Fraction<int> frac2(3,4);
-   
+   Fraction<int> frac1 = creationFraction(-10,4);
+   Fraction<int> frac2 = creationFraction(3,4);
    testBonFonctionnement(frac1,frac2);
-//   cout << "Affichage des fractions : " << endl;
-//   cout << frac1 << " " << frac2 << endl;
-//   
-//   cout << "\nSimplification de fraction : " << endl;
-//   cout << "Avant : " << frac1;
-//   frac1 = frac1.simplifier();
-//   cout << " Apres : " << frac1 << endl;
-//   
-//   cout << "\nEgalite numerique de fractions : " << endl;
-//   cout << frac1 << " et " << frac2 << " egales ?" << endl;
-//   cout << boolalpha << (frac1 == frac2) << endl;
-//   
-//   cout << "\nIdenticite de fractions : " << endl;
-//   cout << frac1 << " et " << frac2 << " identiques ?" << endl;
-//   cout << boolalpha << frac1.identite(frac2) << endl;
-//   
-//   cout << "\nValeur numerique des fractions en double et float :" << endl;
-//   cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
-//   cout << frac2 << " : " << float(frac2) << " (float)" << endl;
    
    Fraction<int> fracT = creationFraction(2,-4);
    cout << fracT<< endl;
    
-   Fraction<int> frac3(-5,6);
-   Fraction<int> frac4(3,4);
+   Fraction<int> frac3 = creationFraction(-5,6);
+   Fraction<int> frac4 = creationFraction(3,4);
    additionFraction(frac3, frac4);        
    multiplicationFraction(frac3, frac4);
    
-   Fraction<int> frac5(2,2);
-   Fraction<int> frac6(3,4);
+   Fraction<int> frac5 = creationFraction(2,2);
+   Fraction<int> frac6 = creationFraction(3,4);
    additionFraction(frac5, frac6);
    
-   double somme = 0;
-   
-//   try{
-//         int signe = 1;
-//         int j = 1;
-//         
-//         while(true) {
-//            double frac = (double)Fraction<int>(signe * 4, j);
-//            somme += frac;
-//            signe *= -1;
-//            j += 2;
-//         }
-//   } catch (exception& e) {
-//      cout << setprecision(15) << somme << endl;
-//   }
-   
-   
+   // Addition jusqu'à débordement pour résultat PI
+   cout << "Calcul de la somme jusqu'au debordement (INT): " << endl;
+   sommeDebordement(4, 1);
+   cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
+   sommeDebordement((long long)4, (long long)1);
+   /*
+      INT : 8 décimales correctes
+      LONG LONG : a venir
+   */
    
    
    system("PAUSE");
@@ -97,14 +71,13 @@ int main()
 template <typename T>
 Fraction<T> creationFraction(T numerateur, T denominateur)
 {
-   cout << "\nCreation de fraction : " << endl;
    try
    {
       return Fraction<int>(numerateur,denominateur);
    }
    catch(const exception& e)
    {
-      cout << "Une erreur est survenue: " << e.what() << endl;
+      cout << "Une erreur est survenue a la creation de fraction: " << e.what() << endl;
    }
    
    // Dans le cas où une erreur à la création survient, retourne une fraction égale à 0
@@ -133,6 +106,31 @@ void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
    cout << "\nValeur numerique des fractions en double et float :" << endl;
    cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
    cout << frac2 << " : " << float(frac2) << " (float)" << endl;
+}
+
+/*
+   Nous avons choisi de n'afficher que le résultat car sinon, l'affichage serait très lourd
+   à lire, du à la longueur de la série.
+*/
+template <typename T>
+void sommeDebordement(T numerateur, T denominateur)
+{  
+   double somme = 0.0;
+   
+   try
+   {  
+      while(true) 
+      {
+         somme += (double)Fraction<T>(numerateur, denominateur);
+         numerateur *= -1;
+         denominateur += 2;
+      }
+   } 
+   catch (const exception& e) 
+   {
+      cout << setprecision(30) << "La valeur de la serie : " << somme << endl;
+      cout << "La serie c'est arretee pour la cause suivante : " << e.what() << endl;
+   }
 }
 
 template <typename T>
