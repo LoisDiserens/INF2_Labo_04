@@ -81,6 +81,12 @@ class Fraction
        */
       bool identite(const Fraction<T>& fractionComparee) const;
       
+      /**
+       * Fonction permettant de savoir si une fraction est négative
+       * @return booléen indiquant true si la fraction est négative
+      */
+      bool fractionNegative() const;
+      
       /*
        * Surcharge de l'opérateur == afin de vérifier l'égalité numérique de deux
        * fractions

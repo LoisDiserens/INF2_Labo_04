@@ -28,7 +28,7 @@ Fraction<T> creationFraction(T numerateur, T denominateur);
 template <typename T>
 void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2);
 template <typename T>
-void sommeDebordement(T numerateur, T denominateur);
+void sommeDebordement(T numerateur, T denominateur, unsigned precision = 30);
 template <typename T>
 void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 template <typename T>
@@ -54,13 +54,13 @@ int main()
    additionFraction(frac5, frac6);
    
    // Addition jusqu'à débordement pour résultat PI
-   cout << "Calcul de la somme jusqu'au debordement (INT): " << endl;
+   cout << "\nCalcul de la somme jusqu'au debordement (INT): " << endl;
    sommeDebordement(4, 1);
    cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
-   sommeDebordement((long long)4, (long long)1);
+   //sommeDebordement((long long)4, (long long)1);
    /*
-      INT : 8 décimales correctes
-      LONG LONG : a venir
+      INT : 8 décimales correctes (3.14159265....), ensuite c'est approximatif
+      LONG LONG : 
    */
    
    
@@ -113,23 +113,30 @@ void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
    à lire, du à la longueur de la série.
 */
 template <typename T>
-void sommeDebordement(T numerateur, T denominateur)
+void sommeDebordement(T numerateur, T denominateur, unsigned precision)
 {  
    double somme = 0.0;
+   unsigned nbIterations = 0;
    
    try
    {  
       while(true) 
       {
          somme += (double)Fraction<T>(numerateur, denominateur);
+         
+         // Modifications des valeurs de la fraction de la prochaine itération
          numerateur *= -1;
          denominateur += 2;
+         
+         nbIterations++;
+         //cout << setprecision(precision) << somme << endl;
       }
    } 
    catch (const exception& e) 
    {
-      cout << setprecision(30) << "La valeur de la serie : " << somme << endl;
-      cout << "La serie c'est arretee pour la cause suivante : " << e.what() << endl;
+      cout << "Nombre de termes: "<< nbIterations << ", la fraction finale: " << Fraction<T>(numerateur * -1, denominateur - 2) << endl
+           << setprecision(precision) << "La valeur de la serie, avec une precision(" << precision <<  ") : " << somme << endl
+           << "La serie c'est arretee pour la cause suivante : " << e.what() << endl;
    }
 }
 
@@ -166,5 +173,4 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
       cout << "Une erreur est survenue: " << e.what() << endl;
    }
 }
-   
    

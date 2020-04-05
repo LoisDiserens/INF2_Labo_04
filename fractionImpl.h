@@ -67,6 +67,12 @@ bool Fraction<T>::identite(const Fraction<T>& fractionComparee) const
 }
 
 template <typename T>
+bool Fraction<T>::fractionNegative() const
+{
+   return numerateur < 0;
+}
+
+template <typename T>
 bool Fraction<T>::operator==(const Fraction<T>& rhs) const
 {
    return (double)*this == (double)rhs;
