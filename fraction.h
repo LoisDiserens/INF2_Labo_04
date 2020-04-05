@@ -2,12 +2,11 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 04
  Fichier     : fraction.h
- Auteur(s)   : Nicolas Ogi
-               Loïs Diserens
+ Auteurs   : Nicolas Ogi, Loïs Diserens
  Date        : 27.03.2020
 
  But         : Ce fichier contient la classe Fraction avec ses fonctions et ses
-               données membres ainsi que sa fonction amie qui est la surcharge de
+               données membres ainsi qu'une fonction amie qui est la surcharge de
                l'opérateur d'écriture sur un flux.
 
  Remarque(s) : -
@@ -23,7 +22,6 @@
 // Déclaration avancée de la classe 
 template <typename T> class Fraction;
 
-// Définition, façon générique, des friends
 template<typename T> 
 std::ostream& operator << (std::ostream& lhs, const Fraction<T>& fraction) { 
    lhs << fraction.numerateur << "/" << fraction.denominateur; 
@@ -37,10 +35,10 @@ std::ostream& operator << (std::ostream& lhs, const Fraction<T>& fraction) {
 template <typename T>
 class Fraction
 {
-   // Friends
+   
    /**
-   * Surcharge de l'opérateur d'écriture sur un flux permettant d'afficher une fraction
-   * avec ce format : "num/den"
+   * Surcharge de l'opérateur d'écriture sur un flux permettant d'afficher une 
+   * fraction avec ce format : num/den
    */
    friend std::ostream& operator<< <T>(std::ostream& lhs, const Fraction<T>& fraction); 
    
@@ -55,10 +53,9 @@ class Fraction
        */
       Fraction<T>(T initNumerateur, T initDenominateur);
       
-      // Fonctions membres publiques
       /**
        * Fonction retournant le dénominateur d'une fraction
-       * @return T le dénominateur de la fraction
+       * @return variable de type T qui est le dénominateur de la fraction
        * 
        * Cette fonction possède la garantie no-throw.
        */
@@ -78,8 +75,10 @@ class Fraction
        * num1 = num2 et den1 = den2
        * @param fractionComparee | objet Fraction avec lequel comparer l'identicité
        * @return booléen indiquant true si les deux fractions sont indentiques
+       * 
+       * Cette fonction possède la garantie no-throw.
        */
-      bool identite(const Fraction<T>& fractionComparee) const;
+      bool identite(const Fraction<T>& fractionComparee) const noexcept;
       
       /**
        * Fonction permettant de savoir si une fraction est négative
@@ -90,53 +89,68 @@ class Fraction
       /*
        * Surcharge de l'opérateur == afin de vérifier l'égalité numérique de deux
        * fractions
-       */
-      bool operator==(const Fraction<T>& rhs) const;
-      
-      //Seulement capable de sommer des fractions. Doit être capable de sommer une fraction avec une constante ?
-      /**
        * 
-       * @param fraction
-       * @return 
+       * Cette surcharge possède la garantie no-throw.
+       */
+      bool operator==(const Fraction<T>& rhs) const noexcept;
+      
+      /**
+       * Surcharge de l'opérateur + afin d'additionner des objets Fraction
+       * @param fraction | objet Fraction avec lequel faire une addition
+       * @return objet Fraction représentant la somme des fractions
+       * 
+       * Cette fonction possède la garantie forte.
        */
       Fraction<T> operator+(const Fraction<T>& fraction) const;
       
       /**
+       * Surcharge de l'opérateur += afin d'additionner une fraction avec une autre
+       * en affectant directement le résultat
+       * @param fraction | objet Fraction avec lequel faire une addition
+       * @return objet Fraction représentant la somme des fractions
        * 
-       * @param fractionAdditionnee
-       * @return 
+       * Cette fonction possède la garantie forte.
        */
-      Fraction<T>& operator+=(const Fraction<T>& fractionAdditionnee);
+      Fraction<T>& operator+=(const Fraction<T>& fraction);
       
-      //Même question mais pour la multiplication ?
       /**
+       * Surcharge de l'opérateur de multiplication afin de multiplier des objets
+       * Fraction entre eux
+       * @param fraction | objet Fraction avec lequel faire la multiplication
+       * @return objet Fraction réprésentant le produit des fractions
        * 
-       * @param fraction
-       * @return 
+       * Cette fonction possède la garantie forte.
        */
       Fraction<T> operator*(const Fraction<T>& fraction) const;
       
       /**
+       * Surcharge de l'opérateur *= afin de multiplier une fraction avec une autre
+       * en affectant directement le résultat 
+       * @param fraction | objet Fraction avec lequel faire la multiplication
+       * @return objet Fraction réprésentant le produit des fractions
        * 
-       * @param fraction
-       * @return 
+       * Cette fonction possède la garantie forte.
        */
       Fraction<T>& operator*=(const Fraction<T>& fraction);
       
       /**
        * Surcharge de l'opérateur de cast double afin de retourner la valeur 
        * numérique de la fraction en double
+       * 
+       * Cette fonction possède la garantie no-throw.
        */
-      operator double() const { return (double)numerateur / (double)denominateur;}
+      operator double() const noexcept { return (double)numerateur / (double)denominateur;}
       
       /**
        * Surcharge de l'opérateur de cast float afin de retourner la valeur 
        * numérique de la fraction en float
+       * 
+       * Cette fonction possède la garantie no-throw.
       */
-      operator float() const { return (float)numerateur / (float)denominateur;}
+      operator float() const noexcept { return (float)numerateur / (float)denominateur;}
       
    private:
-      // Variables 
+      
       T numerateur;
       T denominateur;
       
