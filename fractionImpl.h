@@ -66,15 +66,15 @@ bool Fraction<T>::identite(const Fraction<T>& fractionComparee) const noexcept
 }
 
 template <typename T>
-bool Fraction<T>::fractionNegative() const
+bool Fraction<T>::fractionNegative() const noexcept
 {
    return numerateur < 0;
 }
 
 template <typename T>
 bool Fraction<T>::operator==(const Fraction<T>& rhs) const noexcept
-{
-   return (double)*this == (double)rhs;
+{  
+   return fabs((double)*this - (double)rhs) <= numeric_limits<double>::epsilon();
 }
 
 template <typename T>

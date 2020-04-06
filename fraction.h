@@ -84,7 +84,7 @@ class Fraction
        * Fonction permettant de savoir si une fraction est négative
        * @return booléen indiquant true si la fraction est négative
       */
-      bool fractionNegative() const;
+      bool fractionNegative() const noexcept;
       
       /*
        * Surcharge de l'opérateur == afin de vérifier l'égalité numérique de deux

@@ -78,8 +78,8 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 
 int main() 
 {
-   Fraction<int> frac1 = creationFraction(-10,4);
-   Fraction<int> frac2 = creationFraction(3,4);
+   Fraction<int> frac1 = creationFraction(2,3);
+   Fraction<int> frac2 = creationFraction(4,6);
    testBonFonctionnement(frac1,frac2);
    
    //Création d'une fraction avec un dénominateur négatif
@@ -97,7 +97,14 @@ int main()
            "avec la premiere somme de fractions (INT) : " << endl;
    sommeDebordement(4, 1);
    
-   // Tourne pendant des heures sans créer de dépassement
+   /* Tourne pendant des heures sans créer de dépassement. Plus précisemment,
+      il va y avoir dépassement mais le temps de calcul est gigantesque. 
+      Nous l'avons laissé tourner une nuit entière, mais le programme tournait toujours.
+      Mais lorsqu'il arrive au débordement, il y a bel et bien une exception levée, 
+      nous avons fait le test en entrant manuellement numerci_limits<long long> comme
+      première valeur au denominateur. La fonction entrait dans la boucle une fois, puis
+      après incrémentation, comme attendu, une exception de débordement fut levée.
+   */
    /*cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
    sommeDebordement((long long)4, (long long)1);*/
    
@@ -137,14 +144,6 @@ void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
    cout << "Affichage des fractions : " << endl;
    cout << frac1 << " " << frac2 << endl;
    
-   cout << "\nSimplification de fraction : " << endl;
-   cout << "Avant : " << frac1;
-   frac1 = frac1.simplifier();
-   cout << " Apres : " << frac1 << endl;
-   cout << "Avant : " << frac2;
-   frac2 = frac2.simplifier();
-   cout << " Apres : " << frac2 << endl;
-   
    cout << "\nEgalite numerique de fractions : " << endl;
    cout << frac1 << " et " << frac2 << " egales ?" << endl;
    cout << boolalpha << (frac1 == frac2) << endl;
@@ -153,9 +152,17 @@ void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
    cout << frac1 << " et " << frac2 << " identiques ?" << endl;
    cout << boolalpha << frac1.identite(frac2) << endl;
    
+   cout << "\nSimplification de fraction : " << endl;
+   cout << "Avant : " << frac1;
+   frac1 = frac1.simplifier();
+   cout << " Apres : " << frac1 << endl;
+   cout << "Avant : " << frac2;
+   frac2 = frac2.simplifier();
+   cout << " Apres : " << frac2 << endl;
+   
    cout << "\nValeur numerique des fractions en double et float :" << endl;
    cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
-   cout << frac2 << " : " << float(frac2) << " (float)" << endl;
+   cout << frac2 << " : " << float(frac2) << " (float)" << endl << endl;
 }
 
 template <typename T>
@@ -210,7 +217,6 @@ void sommeDebordement(T numerateur, T denominateur, unsigned precision)
          denominateur += 2;
          
          nbIterations++;
-         //cout << setprecision(precision) << somme << endl;
       }
    } 
    catch (const exception& e) 
@@ -243,7 +249,6 @@ void sommeDebordement2(T numerateur, T denominateur, unsigned precision)
          i = k;
          
          nbIterations++;
-         //cout << setprecision(precision) << somme << endl;
       }
    } 
    catch (const exception& e) 
