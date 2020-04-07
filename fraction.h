@@ -54,14 +54,6 @@ class Fraction
       Fraction<T>(T initNumerateur, T initDenominateur);
       
       /**
-       * Fonction retournant le dénominateur d'une fraction
-       * @return variable de type T qui est le dénominateur de la fraction
-       * 
-       * Cette fonction possède la garantie no-throw.
-       */
-      T donneDenominateur() const noexcept;
-      
-      /**
        * Fonction retournant la version irreductible de l'objet Fraction qui a 
        * appelé cette fonction
        * @return objet Fraction réprésentant la fraction sous forme irréductible
@@ -79,12 +71,6 @@ class Fraction
        * Cette fonction possède la garantie no-throw.
        */
       bool identite(const Fraction<T>& fractionComparee) const noexcept;
-      
-      /**
-       * Fonction permettant de savoir si une fraction est négative
-       * @return booléen indiquant true si la fraction est négative
-      */
-      bool fractionNegative() const noexcept;
       
       /*
        * Surcharge de l'opérateur == afin de vérifier l'égalité numérique de deux

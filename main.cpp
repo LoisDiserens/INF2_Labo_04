@@ -62,6 +62,22 @@ template <typename T>
 void sommeDebordement2(T numerateur, T denominateur, unsigned precision = 20);
 
 /*
+ * Fonction permettant de faire la première somme de fraction qui approxime PI.
+ * La précision par défaut est de 20 chiffres significatifs car le résultat est
+ * donné en double
+ */
+template <typename T>
+void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned precision = 20);
+
+/*
+ * Fonction permettant de faire la deuxième somme de fraction qui approxime PI.
+ * La précision par défaut est de 20 chiffres significatifs car le résultat est
+ * donné en double
+ */
+template <typename T>
+void sommeDebordement2PrecisMaisLong(T numerateur, T denominateur, unsigned precision = 20);
+
+/*
  * Fonction de test permettant de tester l'addition entre des fractions. Elle capture
  * les exceptions que lancerait l'opérateur d'addition
  */
@@ -92,31 +108,28 @@ int main()
    multiplicationFraction(frac3, frac4);
    
    // Approximation de PI avec la première somme de fractions
-   //INT : 8 décimales correctes (3.14159265....)
+   //INT : 0 décimales correctes
    cout << "\nCalcul de la somme jusqu'au debordement "
            "avec la premiere somme de fractions (INT) : " << endl;
    sommeDebordement(4, 1);
+   // sommeDebordementPrecisMaisLong(4, 1);
    
-   /* Tourne pendant des heures sans créer de dépassement. Plus précisemment,
-      il va y avoir dépassement mais le temps de calcul est gigantesque. 
-      Nous l'avons laissé tourner une nuit entière, mais le programme tournait toujours.
-      Mais lorsqu'il arrive au débordement, il y a bel et bien une exception levée, 
-      nous avons fait le test en entrant manuellement numerci_limits<long long> comme
-      première valeur au denominateur. La fonction entrait dans la boucle une fois, puis
-      après incrémentation, comme attendu, une exception de débordement fut levée.
-   */
-   /*cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
-   sommeDebordement((long long)4, (long long)1);*/
    
-   // INT : 8 décimales correctes 3.14159265...
-   cout << "\nCalcul de la somme jusqu'au debordement "
+   cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
+   sommeDebordement((long long)4, (long long)1);
+   // sommeDebordementPrecisMaisLong((long long)4, (long long)1);
+   
+   // INT : 3 décimales correctes 3.141...
+   cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (INT) : " << endl;
    sommeDebordement2(4, 2);
+   // sommeDebordement2PrecisMaisLong(4, 2);
    
-   // LONG LONG : 13 décimales correctes 3.1415926535897...
-   cout << "\nCalcul de la somme jusqu'au debordement "
+   // LONG LONG : 3 décimales correctes 3.141...
+   cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (LONG LONG) : " << endl;
    sommeDebordement2((long long)4, (long long)2);
+   // sommeDebordement2PrecisMaisLong((long long)4, (long long)2);
    
    system("PAUSE");
    return EXIT_SUCCESS;
@@ -199,9 +212,25 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
    }
 }
 
-
+/* 
+   Première méthode qui est beaucoup plus précise car parcours tout le type de dénom,
+   de deux en deux, en sommant le résultat du calcul dans un double. Mais demande un 
+   temps de calcul gigantesque en comparaison.
+ 
+   Pour Int:
+   8 décimales correctes 3.14159265...
+   
+   Pour Long Long:
+   Tourne pendant des heures sans créer de dépassement. Plus précisemment,
+   il va y avoir dépassement mais le temps de calcul est gigantesque. 
+   Nous l'avons laissé tourner une nuit entière, mais le programme tournait toujours.
+   Mais lorsqu'il arrive au débordement, il y a bel et bien une exception levée, 
+   nous avons fait le test en entrant manuellement numerci_limits<long long> comme
+   première valeur au denominateur. La fonction entrait dans la boucle une fois, puis
+   après incrémentation, comme attendu, une exception de débordement fut levée.
+ */
 template <typename T>
-void sommeDebordement(T numerateur, T denominateur, unsigned precision)
+void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned precision)
 {  
    double somme = 0.;
    unsigned nbIterations = 0;
@@ -221,16 +250,27 @@ void sommeDebordement(T numerateur, T denominateur, unsigned precision)
    } 
    catch (const exception& e) 
    {
-      cout << "Nombre de termes : " << nbIterations << ", la fraction finale : " 
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
            << Fraction<T>(numerateur * -1, denominateur - 2) << endl
            << setprecision(precision) << "La valeur de la serie, avec une precision(" 
            << precision <<  ") : " << somme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl;
+           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
 
+/* 
+   Première méthode qui est beaucoup plus précise car parcours tout le type de dénom,
+   de deux en deux, en sommant le résultat du calcul dans un double. Mais demande un 
+   temps de calcul gigantesque en comparaison.
+ 
+   Pour Int:
+   8 décimales correctes 3.14159265...
+   
+   Pour Long Long:
+   13 décimales correctes 3.1415926535897...
+ */
 template <typename T>
-void sommeDebordement2(T numerateur, T denominateur, unsigned precision)
+void sommeDebordement2PrecisMaisLong(T numerateur, T denominateur, unsigned precision)
 {  
    double somme = 3.;
    unsigned nbIterations = 0;
@@ -253,13 +293,71 @@ void sommeDebordement2(T numerateur, T denominateur, unsigned precision)
    } 
    catch (const exception& e) 
    {
-      cout << "Nombre de termes : " << nbIterations << ", la fraction finale : " 
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
            << Fraction<T>(numerateur * -1, (i - 2) * (j - 2) * (k - 2)) << endl
            << setprecision(precision) << "La valeur de la serie, avec une precision(" 
            << precision <<  ") : " << somme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl;
+           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
 
-
+template <typename T>
+void sommeDebordement(T numerateur, T denominateur, unsigned precision)
+{  
+   unsigned nbIterations = 1;
+   Fraction<T> fracSomme(numerateur,denominateur);
    
+   try
+   {  
+      while(true) 
+      {
+         // Modifications des valeurs de la fraction
+         numerateur *= -1;
+         denominateur += 2;
+         
+         fracSomme += Fraction<T>(numerateur, denominateur);
+         
+         nbIterations++;
+      }
+   } 
+   catch (const exception& e) 
+   {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
+           << fracSomme << endl
+           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
+           << precision <<  ") : " << (double)fracSomme << endl
+           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl <<endl;
+   }
+}
+
+template <typename T>
+void sommeDebordement2(T numerateur, T denominateur, unsigned precision)
+{  
+   unsigned nbIterations = 1;
+   T i = denominateur, j, k;
+   Fraction<T> fracSomme((T)3,(T)1);
+   
+   try
+   {  
+      while(true) 
+      {
+         j = i + 1;
+         k = j + 1;
+         fracSomme += Fraction<T>(numerateur, i * j * k);
+         
+         // Modifications des valeurs de la fraction de la prochaine itération
+         numerateur *= -1;
+         i = k;
+         
+         nbIterations++;
+      }
+   } 
+   catch (const exception& e) 
+   {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
+           << fracSomme << endl
+           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
+           << precision <<  ") : " << (double)fracSomme << endl
+           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
+   }
+}
