@@ -94,6 +94,7 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 
 int main() 
 {
+
    Fraction<int> frac1 = creationFraction(2,3);
    Fraction<int> frac2 = creationFraction(4,6);
    testBonFonctionnement(frac1,frac2);
