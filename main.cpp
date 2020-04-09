@@ -104,86 +104,79 @@ void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 template <typename T>
 void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs);
 
+int main() {
 
-int main() 
-{
+   Fraction<int> frac1 = creationFraction(2, 3);
+   Fraction<int> frac2 = creationFraction(4, 6);
+   testBonFonctionnement(frac1, frac2);
 
-   Fraction<int> frac1 = creationFraction(2,3);
-   Fraction<int> frac2 = creationFraction(4,6);
-   testBonFonctionnement(frac1,frac2);
-   
    //Création d'une fraction avec un dénominateur négatif
-   Fraction<int> fracTest = creationFraction(2,-4);
+   Fraction<int> fracTest = creationFraction(2, -4);
    cout << fracTest << endl;
-   
-   Fraction<int> frac3 = creationFraction(-5,6);
-   Fraction<int> frac4 = creationFraction(3,4);
-   additionFraction(frac3, frac4);        
+
+   Fraction<int> frac3 = creationFraction(-5, 6);
+   Fraction<int> frac4 = creationFraction(3, 4);
+   additionFraction(frac3, frac4);
    multiplicationFraction(frac3, frac4);
-   
+
    //Approximation de PI avec la première somme de fractions
    //INT : 0 décimales correctes
    cout << "\nCalcul de la somme jusqu'au debordement "
            "avec la premiere somme de fractions (INT) : " << endl;
    sommeDebordement(4, 1);
-   
+
    // sommeDebordementPrecisMaisLong(4, 1);
-   
+
    //LONG LONG : 0 décimales correctes
    cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
-   sommeDebordement((long long)4, (long long)1);
-   
+   sommeDebordement((long long) 4, (long long) 1);
+
    //sommeDebordementPrecisMaisLong((long long)4, (long long)1);
-   
+
    //Approximation de PI avec la deuxième somme de fractions
    // INT : 3 décimales correctes 3.141...
    cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (INT) : " << endl;
    sommeDebordement2(4, 2);
-   
+
    //sommeDebordement2PrecisMaisLong(4, 2);
-   
+
    // LONG LONG : 3 décimales correctes 3.141...
    cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (LONG LONG) : " << endl;
-   sommeDebordement2((long long)4, (long long)2);
-   
+   sommeDebordement2((long long) 4, (long long) 2);
+
    //sommeDebordement2PrecisMaisLong((long long)4, (long long)2);
-   
+
    system("PAUSE");
    return EXIT_SUCCESS;
 }
 
 template <typename T>
-Fraction<T> creationFraction(T numerateur, T denominateur)
-{
-   try
-   {
-      return Fraction<int>(numerateur,denominateur);
-   }
-   catch(const exception& e)
-   {
+Fraction<T> creationFraction(T numerateur, T denominateur) {
+   try {
+      return Fraction<int>(numerateur, denominateur);
+   }   catch (const exception& e) {
       cout << "Une erreur est survenue a la creation de fraction: " << e.what() << endl;
    }
-   
+
    // Dans le cas où une erreur à la création survient, retourne une fraction égale à 0
-   return Fraction<int>(0,1);
+   return Fraction<int>(0, 1);
 }
 
 template <typename T>
-void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
-{
+void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2) {
    cout << "Affichage des fractions : " << endl;
    cout << frac1 << " " << frac2 << endl;
-   
+
    cout << "\nEgalite numerique de fractions : " << endl;
    cout << frac1 << " et " << frac2 << " egales ?" << endl;
    cout << boolalpha << (frac1 == frac2) << endl;
-   
+
    cout << "\nIdenticite de fractions : " << endl;
    cout << frac1 << " et " << frac2 << " identiques ?" << endl;
    cout << boolalpha << frac1.identite(frac2) << endl;
-   
+
    cout << "\nSimplification de fraction : " << endl;
    cout << "Avant : " << frac1;
    frac1 = frac1.simplifier();
@@ -191,42 +184,34 @@ void testBonFonctionnement(Fraction<T>& frac1, Fraction<T>& frac2)
    cout << "Avant : " << frac2;
    frac2 = frac2.simplifier();
    cout << " Apres : " << frac2 << endl;
-   
+
    cout << "\nValeur numerique des fractions en double et float :" << endl;
-   cout << frac1 << " : " << (double)frac1 << " (double)" << endl;
+   cout << frac1 << " : " << (double) frac1 << " (double)" << endl;
    cout << frac2 << " : " << float(frac2) << " (float)" << endl << endl;
 }
 
 template <typename T>
-void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs)
-{
+void additionFraction(Fraction<T>& lhs, Fraction<T>& rhs) {
    cout << "\nAddition de fractions : " << endl;
-   try
-   {
+   try {
       cout << lhs << " + " << rhs << " = " << lhs + rhs << endl;
       cout << lhs << " += " << rhs << " = ";
       lhs += rhs;
       cout << lhs << endl;
-   }
-   catch(const exception& e)
-   {
+   }   catch (const exception& e) {
       cout << "Une erreur est survenue : " << e.what() << endl;
    }
 }
 
 template <typename T>
-void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
-{
+void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs) {
    cout << "\nMultiplication de fractions : " << endl;
-   try
-   {
+   try {
       cout << lhs << " * " << rhs << " = " << lhs * rhs << endl;
       cout << lhs << " *= " << rhs << " = ";
       lhs *= rhs;
       cout << lhs << endl;
-   }
-   catch(const exception& e)
-   {
+   }   catch (const exception& e) {
       cout << "Une erreur est survenue : " << e.what() << endl;
    }
 }
@@ -249,31 +234,26 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
    après incrémentation, comme attendu, une exception de débordement fut levée.
  */
 template <typename T>
-void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned precision)
-{  
+void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned precision) {
    double somme = 0.;
    unsigned nbIterations = 0;
-   
-   try
-   {  
-      while(true) 
-      {
-         somme += (double)Fraction<T>(numerateur, denominateur);
-         
+
+   try {
+      while (true) {
+         somme += (double) Fraction<T>(numerateur, denominateur);
+
          // Modifications des valeurs de la fraction de la prochaine itération
          numerateur *= -1;
          denominateur += 2;
-         
+
          nbIterations++;
       }
-   } 
-   catch (const exception& e) 
-   {
-      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
-           << Fraction<T>(numerateur * -1, denominateur - 2) << endl
-           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
-           << precision <<  ") : " << somme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
+   } catch (const exception& e) {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : "
+              << Fraction<T>(numerateur * -1, denominateur - 2) << endl
+              << setprecision(precision) << "La valeur de la serie, avec " << precision 
+              << " chiffres significatifs : " << somme << endl
+              << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
 
@@ -289,94 +269,79 @@ void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned preci
    13 décimales correctes 3.1415926535897...
  */
 template <typename T>
-void sommeDebordement2PrecisMaisLong(T numerateur, T denominateur, unsigned precision)
-{  
+void sommeDebordement2PrecisMaisLong(T numerateur, T denominateur, unsigned precision) {
    double somme = 3.;
    unsigned nbIterations = 0;
    T i = denominateur, j, k;
-   
-   try
-   {  
-      while(true) 
-      {
+
+   try {
+      while (true) {
          j = i + 1;
          k = j + 1;
-         somme += (double)Fraction<T>(numerateur, i * j * k);
-         
+         somme += (double) Fraction<T>(numerateur, i * j * k);
+
          // Modifications des valeurs de la fraction de la prochaine itération
          numerateur *= -1;
          i = k;
-         
+
          nbIterations++;
       }
-   } 
-   catch (const exception& e) 
-   {
-      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
-           << Fraction<T>(numerateur * -1, (i - 2) * (j - 2) * (k - 2)) << endl
-           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
-           << precision <<  ") : " << somme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
+   } catch (const exception& e) {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : "
+              << Fraction<T>(numerateur * -1, (i - 2) * (j - 2) * (k - 2)) << endl
+              << setprecision(precision) << "La valeur de la serie, avec " << precision 
+              << " chiffres significatifs : " << somme << endl
+              << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
 
 template <typename T>
-void sommeDebordement(T numerateur, T denominateur, unsigned precision)
-{  
+void sommeDebordement(T numerateur, T denominateur, unsigned precision) {
    unsigned nbIterations = 1;
-   Fraction<T> fracSomme(numerateur,denominateur);
-   
-   try
-   {  
-      while(true) 
-      {
+   Fraction<T> fracSomme(numerateur, denominateur);
+
+   try {
+      while (true) {
          // Modifications des valeurs de la fraction
          numerateur *= -1;
          denominateur += 2;
-         
+
          fracSomme += Fraction<T>(numerateur, denominateur);
-         
+
          nbIterations++;
       }
-   } 
-   catch (const exception& e) 
-   {
-      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
-           << fracSomme << endl
-           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
-           << precision <<  ") : " << (double)fracSomme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl <<endl;
+   } catch (const exception& e) {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : "
+              << fracSomme << endl
+              << setprecision(precision) << "La valeur de la serie, avec " << precision 
+              << " chiffres significatifs : " << (double)fracSomme << endl
+              << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
 
 template <typename T>
-void sommeDebordement2(T numerateur, T denominateur, unsigned precision)
-{  
+void sommeDebordement2(T numerateur, T denominateur, unsigned precision) {
    unsigned nbIterations = 1;
    T i = denominateur, j, k;
-   Fraction<T> fracSomme((T)3,(T)1);
-   
-   try
-   {  
-      while(true) 
-      {
+   Fraction<T> fracSomme((T) 3, (T) 1);
+
+   try {
+      while (true) {
          j = i + 1;
          k = j + 1;
          fracSomme += Fraction<T>(numerateur, i * j * k);
-         
+
          // Modifications des valeurs de la fraction de la prochaine itération
          numerateur *= -1;
          i = k;
-         
+
          nbIterations++;
       }
-   } 
-   catch (const exception& e) 
-   {
-      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : " 
-           << fracSomme << endl
-           << setprecision(precision) << "La valeur de la serie, avec une precision(" 
-           << precision <<  ") : " << (double)fracSomme << endl
-           << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
+   } catch (const exception& e) {
+      cout << "Nombre de termes additionnes : " << nbIterations << ", la fraction finale : "
+              << fracSomme << endl
+              << setprecision(precision) << "La valeur de la serie, avec " << precision 
+              << " chiffres significatifs : " << (double)fracSomme << endl
+              << "La somme s'est arretee pour la cause suivante : " << e.what() << endl << endl;
    }
 }
