@@ -129,6 +129,7 @@ int main()
    
    // sommeDebordementPrecisMaisLong(4, 1);
    
+   //LONG LONG : 0 décimales correctes
    cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
    sommeDebordement((long long)4, (long long)1);
    
