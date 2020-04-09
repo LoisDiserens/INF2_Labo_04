@@ -2,7 +2,7 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 04
  Fichier     : fraction.h
- Auteurs   : Nicolas Ogi, Loïs Diserens
+ Auteurs     : Nicolas Ogi, Loïs Diserens
  Date        : 27.03.2020
 
  But         : Ce fichier contient la classe Fraction avec ses fonctions et ses
@@ -46,15 +46,17 @@ class Fraction
       /**
        * Constructeur permettant d'instancier un objet Fraction en renseignant son
        * numérateur et son dénominateur
-       * @param initNumerateur   | entier représentant le numérateur
-       * @param initDenominateur | entier non-signé représentant le dénominateur
+       * @param  initNumerateur   | entier représentant le numérateur
+       * @param  initDenominateur | entier non-signé représentant le dénominateur
        * @throws std::invalid_argument si le dénominateur est nul (Division par zéro)
        * @throws std::invalid_argument si le dénominateur est négatif
+       * 
+       * Ce constructeur possède une garantie forte.
        */
       Fraction<T>(T initNumerateur, T initDenominateur);
       
       /**
-       * Fonction retournant la version irreductible de l'objet Fraction qui a 
+       * Fonction retournant la version irréductible de l'objet Fraction qui a 
        * appelé cette fonction
        * @return objet Fraction réprésentant la fraction sous forme irréductible
        * 
@@ -65,7 +67,7 @@ class Fraction
       /**
        * Fonction permettant de savoir si deux fractions sont identiques, c.-à-d. si
        * num1 = num2 et den1 = den2
-       * @param fractionComparee | objet Fraction avec lequel comparer l'identicité
+       * @param  fractionComparee | objet Fraction avec lequel comparer l'identicité
        * @return booléen indiquant true si les deux fractions sont indentiques
        * 
        * Cette fonction possède la garantie no-throw.
@@ -82,8 +84,10 @@ class Fraction
       
       /**
        * Surcharge de l'opérateur + afin d'additionner des objets Fraction
-       * @param fraction | objet Fraction avec lequel faire une addition
+       * @param  fraction | objet Fraction avec lequel faire une addition
        * @return objet Fraction représentant la somme des fractions
+       * @throws std::overflow_error si le numérateur ou le dénominateur déborde.
+       * @throws std::underflow_error si le numérateur ou le dénominateur déborde.
        * 
        * Cette fonction possède la garantie forte.
        */
@@ -92,8 +96,10 @@ class Fraction
       /**
        * Surcharge de l'opérateur += afin d'additionner une fraction avec une autre
        * en affectant directement le résultat
-       * @param fraction | objet Fraction avec lequel faire une addition
+       * @param  fraction | objet Fraction avec lequel faire une addition
        * @return objet Fraction représentant la somme des fractions
+       * @throws std::overflow_error si le numérateur ou le dénominateur déborde.
+       * @throws std::underflow_error si le numérateur ou le dénominateur déborde.
        * 
        * Cette fonction possède la garantie forte.
        */
@@ -102,8 +108,10 @@ class Fraction
       /**
        * Surcharge de l'opérateur de multiplication afin de multiplier des objets
        * Fraction entre eux
-       * @param fraction | objet Fraction avec lequel faire la multiplication
+       * @param  fraction | objet Fraction avec lequel faire la multiplication
        * @return objet Fraction réprésentant le produit des fractions
+       * @throws std::overflow_error si le numérateur ou le dénominateur déborde.
+       * @throws std::underflow_error si le numérateur ou le dénominateur déborde.
        * 
        * Cette fonction possède la garantie forte.
        */
@@ -112,8 +120,10 @@ class Fraction
       /**
        * Surcharge de l'opérateur *= afin de multiplier une fraction avec une autre
        * en affectant directement le résultat 
-       * @param fraction | objet Fraction avec lequel faire la multiplication
+       * @param  fraction | objet Fraction avec lequel faire la multiplication
        * @return objet Fraction réprésentant le produit des fractions
+       * @throws std::overflow_error si le numérateur ou le dénominateur déborde.
+       * @throws std::underflow_error si le numérateur ou le dénominateur déborde.
        * 
        * Cette fonction possède la garantie forte.
        */
@@ -140,7 +150,6 @@ class Fraction
       T numerateur;
       T denominateur;
       
-      // Fonctions membres privées
       /**
        * Fonction se basant sur l'algorithme d'Euclide afin de trouver le plus grand
        * diviseur commun entre deux nombres

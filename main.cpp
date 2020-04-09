@@ -2,15 +2,26 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 04
  Fichier     : main.cpp
- Auteurs   : Nicolas Ogi, Loïs Diserens
+ Auteurs     : Nicolas Ogi, Loïs Diserens
  Date        : 27.03.2020
 
  But         : Ce fichier permet de tester la classe Fraction avec des fonctions de
                test dédiées aux fonctionnalités que propose la classe.
 
- Remarque(s) : La première somme de fractions avec le type long long est en commentaire
-               car elle tourne pendant des heures et nous n'avons pas pu obtenir de
-               résultats.
+ Remarque(s) : Nous avons d'abord implémenter une méthode de calcul précise pour les
+               sommes de fractions demandées mais le temps de calcul était très grand
+               pour les long long. Ces fonctions se trouvent toujours dans ce fichier
+               et leurs appels ont été mis en commentaire.
+               
+               - sommeDebordementPrecisMaisLong
+               - sommeDebordement2PrecisMaisLong
+ 
+               Nous avons donc créé deux autres fonctions de somme qui elles, sont
+               conformes aux explications fournies et à ce qui était demandé mais
+               sont cependant bien moins précises.
+
+               - sommeDebordement
+               - sommeDebordement2
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
@@ -24,11 +35,13 @@
 
 using namespace std;
 
-// Déclaration des fonctions de test
+//Déclarations des fonctions de test
 
 /**
  * Fonction de test permettant de tester le constructeur de la classe Fraction.
  * Elle capture les exceptions que lancerait le constructeur.
+ * 
+ * Retourne la fraction 0/1 dans le cas d'une erreur
  */
 template <typename T>
 Fraction<T> creationFraction(T numerateur, T denominateur);
@@ -108,29 +121,33 @@ int main()
    additionFraction(frac3, frac4);        
    multiplicationFraction(frac3, frac4);
    
-   // Approximation de PI avec la première somme de fractions
+   //Approximation de PI avec la première somme de fractions
    //INT : 0 décimales correctes
    cout << "\nCalcul de la somme jusqu'au debordement "
            "avec la premiere somme de fractions (INT) : " << endl;
    sommeDebordement(4, 1);
-   // sommeDebordementPrecisMaisLong(4, 1);
    
+   // sommeDebordementPrecisMaisLong(4, 1);
    
    cout << "Calcul de la somme jusqu'au debordement (LONG LONG): " << endl;
    sommeDebordement((long long)4, (long long)1);
-   // sommeDebordementPrecisMaisLong((long long)4, (long long)1);
    
+   //sommeDebordementPrecisMaisLong((long long)4, (long long)1);
+   
+   //Approximation de PI avec la deuxième somme de fractions
    // INT : 3 décimales correctes 3.141...
    cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (INT) : " << endl;
    sommeDebordement2(4, 2);
-   // sommeDebordement2PrecisMaisLong(4, 2);
+   
+   //sommeDebordement2PrecisMaisLong(4, 2);
    
    // LONG LONG : 3 décimales correctes 3.141...
    cout << "Calcul de la somme jusqu'au debordement "
            "avec la deuxieme somme de fractions (LONG LONG) : " << endl;
    sommeDebordement2((long long)4, (long long)2);
-   // sommeDebordement2PrecisMaisLong((long long)4, (long long)2);
+   
+   //sommeDebordement2PrecisMaisLong((long long)4, (long long)2);
    
    system("PAUSE");
    return EXIT_SUCCESS;
@@ -214,7 +231,7 @@ void multiplicationFraction(Fraction<T>& lhs, Fraction<T>& rhs)
 }
 
 /* 
-   Première méthode qui est beaucoup plus précise car parcours tout le type de dénom,
+   Première méthode qui est beaucoup plus précise car parcourt tout le type de dénom,
    de deux en deux, en sommant le résultat du calcul dans un double. Mais demande un 
    temps de calcul gigantesque en comparaison.
  
@@ -260,7 +277,7 @@ void sommeDebordementPrecisMaisLong(T numerateur, T denominateur, unsigned preci
 }
 
 /* 
-   Première méthode qui est beaucoup plus précise car parcours tout le type de dénom,
+   Première méthode qui est beaucoup plus précise car parcourt tout le type de dénom,
    de deux en deux, en sommant le résultat du calcul dans un double. Mais demande un 
    temps de calcul gigantesque en comparaison.
  
